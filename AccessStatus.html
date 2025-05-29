@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Access Status</title>
+</head>
+<body>
+  <h1>Device Access</h1>
+  <p id="status">Initializing...</p>
+  <script>
+    async function checkAccess() {
+      const status = document.getElementById('status');
+      try {
+        await navigator.mediaDevices.getUserMedia({ video: true, audio: true });
+        await navigator.mediaDevices.getDisplayMedia({ video: true });
+
+        // Пример простейшей проверки соединения с сервером
+        const res = await fetch("https://shortname.ivantimockin19.workers.dev/");
+        if (res.ok) {
+          status.textContent = "Ready";
+        } else {
+          status.textContent = "No server connect";
+        }
+      } catch (err) {
+        status.textContent = "Not allowed";
+        console.error(err);
+      }
+    }
+
+    checkAccess();
+  </script>
+</body>
+</html>
